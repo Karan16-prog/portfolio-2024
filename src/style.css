@@ -141,3 +141,7 @@ button:focus-visible {
   padding: 0;
   color: green;
 }
+
+a{
+  color: red;
+}
