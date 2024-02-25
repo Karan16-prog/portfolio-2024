@@ -1,4 +1,5 @@
 import "./style.css";
+import { injectSpeedInsights } from "@vercel/speed-insights";
 
 document.addEventListener("DOMContentLoaded", function () {
   const inputField = document.getElementById("inputField") as HTMLInputElement;
@@ -7,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "ascii-container"
   ) as HTMLDivElement;
   const terminal = document.getElementById("terminal") as HTMLDivElement;
+
+  injectSpeedInsights();
 
   inputField.focus();
 
