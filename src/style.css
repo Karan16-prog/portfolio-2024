@@ -18,7 +18,19 @@
 
 body{
   margin: 20px;
- 
+}
+
+.terminal{
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;/
+}
+
+.terminal::-webkit-scrollbar {
+  width: 0;
+  /* Width of the scrollbar */
+  height: 0;
+  /* Height of the scrollbar */
 }
 /* 
 a {

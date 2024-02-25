@@ -4,18 +4,19 @@ import "./style.css";
 document.addEventListener("DOMContentLoaded", function () {
   const inputField = document.getElementById("inputField") as HTMLInputElement;
   const commandArea = document.getElementById("cmd-area") as HTMLDivElement;
+  const asciiContainer = document.getElementById(
+    "ascii-container"
+  ) as HTMLDivElement;
 
   inputField.focus();
 
   const initalDesc = [
     "<div>Type 'help' to see the list of available commands.</div>",
-    "<div>Type 'sudo secret' to see something special!.</div>",
+    // "<div>Type 'sudo secret' to see something special!</div>",
     `</div>Type 'repo' or <a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer">Click Here</a> for the Github repository</div>`,
+    `<div>[tab]: Trigger completion <span style="color:red">IN PROGRESS</span></div>`,
+    `<div>[Upper Key]: Displays the previous command used in the terminal  <span style="color:red">IN PROGRESS</span></div>`,
   ];
-
-  const asciiContainer = document.getElementById(
-    "ascii-container"
-  ) as HTMLDivElement;
 
   if (asciiContainer) {
     const asciiArt = `
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     "<br>",
     `about me&nbsp;&nbsp;&nbsp;description about Karan\n`,
     "<br>",
-    `resume&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displays link to view resime\n`,
+    `resume&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displays link to view resume\n`,
     "<br>",
     `github &nbsp;&nbsp;&nbsp;&nbsp;displays link to visit Karan's Github\n`,
     "<br>",
@@ -61,9 +62,14 @@ document.addEventListener("DOMContentLoaded", function () {
     "<br>",
     `clear  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean the terminal`,
     "<br>",
+    `projects &nbsp; Description of all my projects with links`,
+    "<br>",
+    `repo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Links to github repo of this project`,
+    "<br>",
   ];
 
   const aboutMe = [
+    "<br>",
     "Hi! I am Karan Singh",
     "<br>",
     "I'm a software engineer, who builds engaging websites like this one\n",
@@ -80,11 +86,49 @@ document.addEventListener("DOMContentLoaded", function () {
     "<br>",
   ];
 
+  const projects = [
+    "<br>",
+    "1. Article Saver with Built in Parser",
+    `<a href="https://github.com/Karan16-prog/clipper" target="_blank" rel="noopener noreferrer"> Repo Link </a>, <a href="https://clipper-nine.vercel.app/" target="_blank" rel="noopener noreferrer"> Hosted Link </a>`,
+    "A fullstack application used to save articles and access it from any device.",
+    "It parses and scrapes the article's metadata and saves them in a card format",
+    "with their title, image and domain. Built using Next, Prisma ORM, Postgresql",
+    "Next Auth & Typescript.",
+    "P.S Don't open in mobile. I got bored and never added responsiveness",
+    "<br>",
+    "<br>",
+    "2. Github Viewer",
+    `<a href="https://github.com/Karan16-prog/github-profile-viewer" target="_blank" rel="noopener noreferrer"> Repo Link </a>, <a href="https://github-profile-viewer-five.vercel.app/" target="_blank" rel="noopener noreferrer"> Hosted Link </a>`,
+    "A frontend application used to checkout Github User Profiles and",
+    "lists all their public repos in a tabular format.",
+    "P.S Don't open in mobile. I got bored and never added responsiveness",
+    "<br>",
+    "<br>",
+    "3. Terminal Based Porfolio",
+    `<a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer"> Repo Link </a>`,
+    "A vanilla typescript app that looks like a terminal",
+    "and also happens to be my portfolio!",
+    "<br>",
+    "<br>",
+    "4. Basic Notes App",
+    `<a href="https://github.com/Karan16-prog/NoteApp" target="_blank" rel="noopener noreferrer"> Repo Link </a>, <a href="https://note-app-mu-neon.vercel.app/" target="_blank" rel="noopener noreferrer"> Hosted Link </a>`,
+    "Your basic notes app! Hey we all have to start from somewhere!",
+    "Built with React. Uses localstorage to save notes. Has a dark mode and search filter. ",
+    "<br>",
+  ];
+
   const handleClickOutside = (event: MouseEvent) => {
     if (!inputField.contains(event.target as Node)) {
       inputField.focus();
     }
   };
+
+  function scrollDown(): void {
+    window.scrollBy({
+      top: window.innerHeight,
+      behavior: "smooth",
+    });
+  }
 
   inputField.addEventListener("keypress", (e) => {
     if (e.key == "Enter") {
@@ -110,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
           helpText.appendChild(cmdTemp);
           helpData.forEach((ele) => {
             let newNode = document.createElement("div");
+            newNode.setAttribute("style", "width: 100%");
             newNode.innerHTML = ele;
             helpText.appendChild(newNode);
           });
@@ -183,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const repoDiv = document.createElement("div");
           // repoDiv.appendChild(cmdTemp);
           const repoLinkNode = document.createElement("div");
-          repoLinkNode.innerHTML = `<a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer">repo URL</a>`;
+          repoLinkNode.innerHTML = `<a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer">Repo URL</a>`;
           repoDiv.appendChild(repoLinkNode);
           length = commandArea.children.length;
           commandArea.insertBefore(repoDiv, commandArea.children[length - 1]);
@@ -211,7 +256,23 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           break;
-
+        case "projects":
+          let projectChild = document.createElement("div");
+          projectChild.setAttribute(
+            "style",
+            "display: flex; flex-direction:column"
+          );
+          projects.forEach((ele) => {
+            let tempNode = document.createElement("div");
+            tempNode.innerHTML = `<div>${ele}</div>`;
+            projectChild.appendChild(tempNode);
+            commandArea.insertBefore(
+              projectChild,
+              commandArea.children[length - 1]
+            );
+            commandArea.insertBefore(cmdTemp, commandArea.children[length - 1]);
+          });
+          break;
         default:
           length = commandArea.children.length;
           const notFound = `zsh: command not found: ${command}`;
@@ -221,6 +282,8 @@ document.addEventListener("DOMContentLoaded", function () {
           commandArea.insertBefore(cmdTemp, commandArea.children[length - 1]);
         // console.log("default", command);
       }
+
+      scrollDown();
     }
   });
 
