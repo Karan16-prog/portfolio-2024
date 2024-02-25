@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const asciiContainer = document.getElementById(
     "ascii-container"
   ) as HTMLDivElement;
+  const terminal = document.getElementById("terminal") as HTMLDivElement;
 
   inputField.focus();
 
@@ -13,8 +14,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "<div>Type 'help' to see the list of available commands.</div>",
     // "<div>Type 'sudo secret' to see something special!</div>",
     `</div>Type 'repo' or <a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer">Click Here</a> for the Github repository</div>`,
-    `<div>[tab]: Trigger completion  <span style="color:red">IN PROGRESS</span>`,
-    `<div>[upper Key]: Displays the previous command used in the terminal  <span style="color:red">IN PROGRESS</span></div>`,
+    `<div>[tab]: Trigger completion  <span style="color:#FFA0A0">IN PROGRESS</span>`,
+    `<div>[upper Key]: Displays the previous command used in the terminal  <span style="color:#FFA0A0">IN PROGRESS</span></div>`,
   ];
 
   if (asciiContainer) {
@@ -75,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     `blow your mind, just like this one!`,
     "<br>",
     `After cruising through my Bachelor's in Engineering, I dove headfirst`,
-    `into the wild world of web development, getting totally hooked on the JavaScript pack fr <span style="font-size:16px">🚬</span>`,
+    `into the wild world of web development, getting totally hooked on the JavaScript pack fr <span style="font-size:20px">🚬</span>`,
     "<br>",
     "But hey, life's not all about code, right? When I'm not busy crafting digital dreams,",
     "you can catch me diving into fantastical realms within the pages of epic fantasy books,",
@@ -125,10 +126,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function scrollDown(): void {
-    window.scrollBy({
-      top: window.innerHeight,
-      behavior: "smooth",
-    });
+    if (terminal) {
+      terminal.scrollTo({ top: terminal.scrollHeight, behavior: "smooth" });
+    }
   }
 
   inputField.addEventListener("keypress", (e) => {
