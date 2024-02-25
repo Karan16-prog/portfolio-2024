@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "<div>Type 'help' to see the list of available commands.</div>",
     // "<div>Type 'sudo secret' to see something special!</div>",
     `</div>Type 'repo' or <a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer">Click Here</a> for the Github repository</div>`,
-    `<div>[tab]: Trigger completion`,
-    `<div>[Upper Key]: Displays the previous command used in the terminal  <span style="color:red">IN PROGRESS</span></div>`,
+    `<div>[tab]: Trigger completion  <span style="color:red">IN PROGRESS</span>`,
+    `<div>[upper Key]: Displays the previous command used in the terminal  <span style="color:red">IN PROGRESS</span></div>`,
   ];
 
   if (asciiContainer) {
