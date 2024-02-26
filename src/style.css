@@ -108,6 +108,8 @@ body{
 
 a{
   color:#0074d9;
+  font-weight: 800;
+  background-color: #ADD8E6;
 }
 /* .img-container{
   position: absolute;
