@@ -1,5 +1,6 @@
 import "./style.css";
 import { injectSpeedInsights } from "@vercel/speed-insights";
+import { inject } from "@vercel/analytics";
 
 document.addEventListener("DOMContentLoaded", function () {
   const inputField = document.getElementById("inputField") as HTMLInputElement;
@@ -9,7 +10,9 @@ document.addEventListener("DOMContentLoaded", function () {
   ) as HTMLDivElement;
   const terminal = document.getElementById("terminal") as HTMLDivElement;
 
+  // performance and analytics -- vercel
   injectSpeedInsights();
+  inject();
 
   inputField.focus();
 
