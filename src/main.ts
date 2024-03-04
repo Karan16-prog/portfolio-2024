@@ -1,6 +1,7 @@
 import "./style.css";
 import { injectSpeedInsights } from "@vercel/speed-insights";
 import { inject } from "@vercel/analytics";
+import config from "./config";
 
 document.addEventListener("DOMContentLoaded", function () {
   const inputField = document.getElementById("inputField") as HTMLInputElement;
@@ -10,39 +11,24 @@ document.addEventListener("DOMContentLoaded", function () {
   ) as HTMLDivElement;
   const terminal = document.getElementById("terminal") as HTMLDivElement;
 
+  const commandStack: { stack: string[]; index: number } = {
+    stack: [],
+    index: -1,
+  };
+
   // performance and analytics -- vercel
   injectSpeedInsights();
   inject();
 
   inputField.focus();
 
-  const initalDesc = [
-    "<div>Type 'help' to see the list of available commands.</div>",
-    // "<div>Type 'sudo secret' to see something special!</div>",
-    `</div>Type 'repo' or <a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer">Click Here</a> for the Github repository</div>`,
-    `<div>[tab]: Trigger completion  <span style="color:#FFA0A0">IN PROGRESS</span>`,
-    `<div>[upper Key]: Displays the previous command used in the terminal  <span style="color:#FFA0A0">IN PROGRESS</span></div>`,
-  ];
+  const initalDesc = config.INITIAL_DESC;
+  const helpData = config.HELP_LIST;
+  const aboutMe = config.ABOUT_ME;
+  const projects = config.PROJECTS;
 
   if (asciiContainer) {
-    const asciiArt = `
-<pre class="ascii-font">
-██╗░░██╗░█████╗░██████╗░░█████╗░███╗░░██╗██╗░██████╗
-██║░██╔╝██╔══██╗██╔══██╗██╔══██╗████╗░██║╚█║██╔════╝
-█████═╝░███████║██████╔╝███████║██╔██╗██║░╚╝╚█████╗░
-██╔═██╗░██╔══██║██╔══██╗██╔══██║██║╚████║░░░░╚═══██╗
-██║░╚██╗██║░░██║██║░░██║██║░░██║██║░╚███║░░░██████╔╝
-╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝░░░╚═════╝░
-</pre>
-<pre class="ascii-font" style="margin-bottom:20px">
-██████╗░░█████╗░██████╗░████████╗███████╗░█████╗░██╗░░░░░██╗░█████╗░██╗██╗██╗
-██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██╔══██╗██║░░░░░██║██╔══██╗██║██║██║
-██████╔╝██║░░██║██████╔╝░░░██║░░░█████╗░░██║░░██║██║░░░░░██║██║░░██║██║██║██║
-██╔═══╝░██║░░██║██╔══██╗░░░██║░░░██╔══╝░░██║░░██║██║░░░░░██║██║░░██║╚═╝╚═╝╚═╝
-██║░░░░░╚█████╔╝██║░░██║░░░██║░░░██║░░░░░╚█████╔╝███████╗██║╚█████╔╝██╗██╗██╗
-╚═╝░░░░░░╚════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═╝░░░░░░╚════╝░╚══════╝╚═╝░╚════╝░╚═╝╚═╝╚═╝
-</pre>
-`;
+    const asciiArt = config.ASCII_ART;
 
     asciiContainer.innerHTML = asciiArt;
     initalDesc.forEach((ele) => {
@@ -51,79 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
       asciiContainer.appendChild(tempNode);
     });
   }
-
-  const helpData = [
-    "<br>",
-    `help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list all the available commands\n`,
-    "<br>",
-    `about me&nbsp;&nbsp;&nbsp;description about Karan\n`,
-    "<br>",
-    `resume&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displays link to view resume\n`,
-    "<br>",
-    `github &nbsp;&nbsp;&nbsp;&nbsp;displays link to visit Karan's Github\n`,
-    "<br>",
-    `leetcode &nbsp; displays link to visit Karan's Leetcode profile\n`,
-    "<br>",
-    `linkedin &nbsp; check out my linkedin. I have never posted anything :P`,
-    "<br>",
-    `clear  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clean the terminal`,
-    "<br>",
-    `projects &nbsp; Description of all my projects with links`,
-    "<br>",
-    `repo &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Links to github repo of this project`,
-    "<br>",
-  ];
-
-  const aboutMe = [
-    "<br>",
-    `Hey there  <span style="font-size:20px">👋</span>, groovy souls!`,
-    "<br>",
-    `I'm Karan Singh, a web-weaving wizard who crafts websites that'll`,
-    `blow your mind, just like this one!`,
-    "<br>",
-    `After cruising through my Bachelor's in Engineering, I dove headfirst`,
-    `into the wild world of web development, getting totally hooked on the JavaScript pack fr <span style="font-size:20px">🚬</span>`,
-    "<br>",
-    "But hey, life's not all about code, right? When I'm not busy crafting digital dreams,",
-    "you can catch me diving into fantastical realms within the pages of epic fantasy books,",
-    "kicking back with a tub of popcorn for some blockbuster movie magic, or embarking on",
-    "epic quests in role-playing video games (are you an Elden Lord?).",
-    "<br>",
-    "Wanna vibe with me? Drop me a line at karan.s1606@gmail.com or",
-    `dial me up at +91-8291673037. Let's connect and create some digital magic together!  <span style="font-size:20px">🙏</span>`,
-    "<br>",
-  ];
-
-  const projects = [
-    "<br>",
-    "1. Article Saver with Built in Parser",
-    `<a href="https://github.com/Karan16-prog/clipper" target="_blank" rel="noopener noreferrer"> Repo Link </a>, <a href="https://clipper-nine.vercel.app/" target="_blank" rel="noopener noreferrer"> Hosted Link </a>`,
-    "A fullstack application used to save articles and access it from any device.",
-    "It parses and scrapes the article's metadata and saves them in a card format",
-    "with their title, image and domain. Built using Next, Prisma ORM, Postgresql",
-    "Next Auth & Typescript.",
-    "P.S Don't open in mobile",
-    "<br>",
-    "<br>",
-    "2. Github Viewer",
-    `<a href="https://github.com/Karan16-prog/github-profile-viewer" target="_blank" rel="noopener noreferrer"> Repo Link </a>, <a href="https://github-profile-viewer-five.vercel.app/" target="_blank" rel="noopener noreferrer"> Hosted Link </a>`,
-    "A frontend application used to checkout Github User Profiles and",
-    "lists all their public repos in a tabular format.",
-    "P.S Don't open in mobile. I got bored and never added responsiveness",
-    "<br>",
-    "<br>",
-    "3. Terminal Based Porfolio",
-    `<a href="https://github.com/Karan16-prog/portfolio-2024" target="_blank" rel="noopener noreferrer"> Repo Link </a>`,
-    "A vanilla typescript app that looks like a terminal",
-    "and also happens to be my portfolio!",
-    "<br>",
-    "<br>",
-    "4. Basic Notes App",
-    `<a href="https://github.com/Karan16-prog/NoteApp" target="_blank" rel="noopener noreferrer"> Repo Link </a>, <a href="https://note-app-mu-neon.vercel.app/" target="_blank" rel="noopener noreferrer"> Hosted Link </a>`,
-    "Your basic notes app! Hey we all have to start from somewhere!",
-    "Built with React. Uses localstorage to save notes. Has a dark mode and search filter. ",
-    "<br>",
-  ];
 
   const handleClickOutside = (event: MouseEvent) => {
     if (!inputField.contains(event.target as Node)) {
@@ -137,9 +50,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  inputField.addEventListener("keypress", (e) => {
+  inputField.addEventListener("keydown", (e) => {
     if (e.key == "Enter") {
       const command = inputField.value;
+      commandStack.stack.push(command);
+      commandStack.index = commandStack.stack.length - 1;
       inputField.value = "";
       const cmdTemp = document.createElement("div");
 
@@ -291,8 +206,25 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       scrollDown();
+    } else if (e.key === "ArrowUp") {
+      if (commandStack.index >= 0) {
+        console.log(commandStack.stack[commandStack.index]);
+        inputField.value = commandStack.stack[commandStack.index];
+        commandStack.index--;
+        requestAnimationFrame(() => {
+          inputField.focus();
+          inputField.setSelectionRange(
+            inputField.value.length,
+            inputField.value.length
+          );
+        });
+      }
     }
   });
 
   document.addEventListener("click", handleClickOutside);
 });
+
+// if tab enters
+//  1. No Text - insert 4 spaces
+//  2. If Text present,
